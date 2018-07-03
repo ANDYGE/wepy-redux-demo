@@ -8,7 +8,7 @@
   <button @tap="addList">添加</button>
   <view class="box">
     <view class="item" wx:for-items="{{ todoList }}" wx:key="index">
-      <view class="title">{{ item.title }}</view>
+        <view class="title">{{ item.title }}</view>
         <view class="content">{{ item.text }}</view>
         <button type="primary" class="delete" @tap="delete({{index}})">删除</button>
       </view>
