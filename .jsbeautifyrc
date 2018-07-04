@@ -5,6 +5,6 @@
    "jslint_happy": true,
    "unformatted": [""],
    "css": {
-     "indent_size": 4
+     "indent_size": 2
    }
  }
