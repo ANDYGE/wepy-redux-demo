@@ -1,13 +1,14 @@
 <template lang="wxml">
-<view class="container">
-  <text>同步{{ num }}</text>
-  <text>异步{{ asyncNum }}</text>
-  <button @tap="increment" type="primary">加一</button>
-  <button @tap="decrement" type="primary">减一</button>
-  <button @tap="asyncIncrement" type="primary">异步加一</button>
-  <button @tap="addList">添加</button>
-  <view class="box">
-    <view class="item" wx:for-items="{{ todoList }}" wx:key="index">
+  <view class="container">
+    <text>同步{{ num }}</text>
+    <text>异步{{ asyncNum }}</text>
+    <button @tap="increment" type="primary" size="mini">加一</button>
+    <button @tap="decrement" type="primary" size="mini">减一</button>
+    <button @tap="asyncIncrement" type="primary" size="mini">异步加一</button>
+    <button @tap="asyncDes" type="primary" size="mini">异步减一</button>
+    <button @tap="addList">添加</button>
+    <view class="box">
+      <view class="item" wx:for-items="{{ todoList }}" wx:key="index">
         <view class="title">{{ item.title }}</view>
         <view class="content">{{ item.text }}</view>
         <button type="primary" class="delete" @tap="delete({{index}})">删除</button>
@@ -15,14 +16,13 @@
     </view>
   </view>
 </template>
+
 <script>
 import wepy from 'wepy'
 import { connect, getStore } from 'wepy-redux'
 import { INCREMENT, DECREMENT } from '../store/types/counter'
-import { asyncInc } from '../store/actions'
-
+import { asyncInc, asyncDes } from '../store/actions'
 const store = getStore()
-
 @connect(
   {
     num(state) {
@@ -35,7 +35,8 @@ const store = getStore()
   {
     increment: INCREMENT,
     decrement: DECREMENT,
-    asyncIncrement: asyncInc
+    asyncIncrement: asyncInc,
+    asyncDes
   }
 )
 export default class Index2 extends wepy.page {
@@ -47,12 +48,18 @@ export default class Index2 extends wepy.page {
   }
   methods = {
     delete(index) {
-      store.dispatch({ type: 'REMOVE', payload: index })
+      store.dispatch({
+        type: 'REMOVE',
+        payload: index
+      })
     },
     addList() {
       store.dispatch({
         type: 'ADD',
-        payload: { title: '学习', text: '好好学习' }
+        payload: {
+          title: '学习',
+          text: '好好学习'
+        }
       })
     }
   }
@@ -61,6 +68,7 @@ export default class Index2 extends wepy.page {
   }
 }
 </script>
+
 <style lang="less">
 text {
   display: block;
@@ -68,9 +76,7 @@ text {
   margin: 10px auto;
 }
 button {
-  width: 90%;
-  display: block;
-  margin: 10px auto;
+  margin: 5px auto;
 }
 .item {
   display: flex;
